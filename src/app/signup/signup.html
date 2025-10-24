@@ -1,0 +1,89 @@
+<form [formGroup]="SignForm" (ngSubmit)="onSubmit()" class="uk-form-stacked uk-container uk-margin-top uk-width-1-2@m">
+
+  <!-- Email -->
+  <div class="uk-margin">
+    <label class="uk-form-label" for="email">Email</label>
+    <div class="uk-form-controls">
+      <input id="email" class="uk-input" type="email" formControlName="email" placeholder="user@example.com">
+      <div *ngIf="SignForm.get('email')?.invalid && SignForm.get('email')?.touched" class="uk-text-danger uk-margin-small-top">
+        Veuillez entrer un email valide.
+      </div>
+    </div>
+  </div>
+
+  <!-- Mot de passe -->
+  <div class="uk-margin">
+    <label class="uk-form-label" for="password">Mot de passe</label>
+    <div class="uk-form-controls">
+      <input id="password" class="uk-input" type="password" formControlName="password" placeholder="••••••">
+      <div *ngIf="SignForm.get('password')?.invalid && SignForm.get('password')?.touched" class="uk-text-danger uk-margin-small-top">
+        Le mot de passe doit contenir au moins 6 caractères.
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation du mot de passe -->
+  <div class="uk-margin">
+    <label class="uk-form-label" for="passwordConfirm">Confirmer le mot de passe</label>
+    <div class="uk-form-controls">
+      <input id="passwordConfirm" class="uk-input" type="password" formControlName="passwordConfirm" placeholder="••••••">
+      <div *ngIf="SignForm.get('passwordConfirm')?.invalid && SignForm.get('passwordConfirm')?.touched" class="uk-text-danger uk-margin-small-top">
+        Veuillez confirmer votre mot de passe.
+      </div>
+      <div *ngIf="SignForm.errors?.['mismatch'] && SignForm.get('passwordConfirm')?.touched" class="uk-text-danger uk-margin-small-top">
+        Les mots de passe ne correspondent pas.
+      </div>
+    </div>
+  </div>
+
+  <!-- Pseudo -->
+  <div class="uk-margin">
+    <label class="uk-form-label" for="pseudo">Pseudo</label>
+    <div class="uk-form-controls">
+      <input id="pseudo" class="uk-input" type="text" formControlName="pseudo" placeholder="User">
+      <div *ngIf="SignForm.get('pseudo')?.invalid && SignForm.get('pseudo')?.touched" class="uk-text-danger uk-margin-small-top">
+        Le pseudo est requis.
+      </div>
+    </div>
+  </div>
+
+  <!-- Code postal -->
+  <div class="uk-margin">
+    <label class="uk-form-label" for="cityCode">Code postal</label>
+    <div class="uk-form-controls">
+      <input id="cityCode" class="uk-input" type="text" formControlName="cityCode" placeholder="44000">
+      <div *ngIf="SignForm.get('cityCode')?.invalid && SignForm.get('cityCode')?.touched" class="uk-text-danger uk-margin-small-top">
+        Le code postal doit contenir 5 chiffres.
+      </div>
+    </div>
+  </div>
+
+  <!-- Ville -->
+  <div class="uk-margin">
+    <label class="uk-form-label" for="city">Ville</label>
+    <div class="uk-form-controls">
+      <input id="city" class="uk-input" type="text" formControlName="city" placeholder="Nantes">
+      <div *ngIf="SignForm.get('city')?.invalid && SignForm.get('city')?.touched" class="uk-text-danger uk-margin-small-top">
+        La ville est requise.
+      </div>
+    </div>
+  </div>
+
+  <!-- Téléphone -->
+  <div class="uk-margin">
+    <label class="uk-form-label" for="phone">Téléphone</label>
+    <div class="uk-form-controls">
+      <input id="phone" class="uk-input" type="text" formControlName="phone" placeholder="0600000000">
+      <div *ngIf="SignForm.get('phone')?.invalid && SignForm.get('phone')?.touched" class="uk-text-danger uk-margin-small-top">
+        Le numéro de téléphone doit commencer par 0 et contenir 10 chiffres.
+      </div>
+    </div>
+  </div>
+
+  <!-- Bouton de soumission -->
+  <div class="uk-margin uk-text-center">
+    <button type="submit" class="uk-button uk-button-primary" [disabled]="SignForm.invalid">
+      S'inscrire
+    </button>
+  </div>
+</form>

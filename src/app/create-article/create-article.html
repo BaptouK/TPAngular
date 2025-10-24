@@ -1,0 +1,28 @@
+<form [formGroup]="ArticleForm" (ngSubmit)="onSubmit()" class="uk-form-stacked uk-container uk-margin-top">
+
+  <div class="uk-margin">
+    <label class="uk-form-label">Titre</label>
+    <input class="uk-input" name="title" formControlName="title" required />
+  </div>
+
+  <div class="uk-margin">
+    <label class="uk-form-label">Description</label>
+    <textarea  class="uk-textarea" name="desc" formControlName="desc" required></textarea>
+  </div>
+
+  <div class="uk-margin">
+    <label class="uk-form-label">Auteur</label>
+    <input  class="uk-input" name="author" formControlName="author"   required />
+  </div>
+
+  <div class="uk-margin">
+    <label class="uk-form-label">Image (URL)</label>
+    <input  class="uk-input" name="imgPath" formControlName="imgPath"  required />
+  </div>
+
+  <div class="uk-margin uk-text-center">
+    <button class="uk-button uk-button-primary" type="submit" [disabled]="ArticleForm.invalid">
+      Créer l’article
+    </button>
+  </div>
+</form>

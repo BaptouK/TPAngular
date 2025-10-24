@@ -1,0 +1,34 @@
+
+@if(article.length === 0) {
+  <h1>Aucun article disponible pour le moment.</h1>
+  <p>Cliquez <a href="/create">ici</a> pour en ajouter</p>
+} @else {
+
+  <div class="uk-flex uk-flex-between" >
+  <h1>Voici nos derniers articles !</h1>
+  <a href="/create" class="uk-flex"><button class="uk-button uk-button-primary uk-margin-small-right " >AJouter un article</button> </a>
+  </div>
+
+
+  <div uk-grid-small uk-grid-stack>
+
+    @for (item of article; track item.id) {
+      <a href="article/{{item.id}}" class="uk-text-decoration-none">
+
+        <div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
+          <div>
+            <div class="uk-card-body ">
+              <h1 class="uk-card-title uk-text-bolder ">{{item.title}}</h1>
+              <h3 class="uk-card ">{{ item.desc }}</h3>
+              <p>{{item.author}}</p>
+            </div>
+          </div>
+          <div class="uk-card-media-left uk-cover-container">
+            <img [src]="item.imgPath" alt="{{ item.title }}" />
+          </div>
+        </div>
+      </a>
+    }
+  </div>
+
+}

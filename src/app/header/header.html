@@ -1,0 +1,14 @@
+<nav class="uk-navbar-container" uk-navbar>
+  <div class="uk-navbar-center">
+    <ul class="uk-navbar-nav">
+      <li><a href="article">Articles</a></li>
+      <li><a href="create">Create article</a></li>
+      @if(this.authenticated){
+      <li><a href="#">deconnexion</a></li>
+      } @else {
+      <li><a href="auth">Connexion</a></li>
+      <li><a href="signup">Inscription</a></li>
+      }
+    </ul>
+  </div>
+</nav>
