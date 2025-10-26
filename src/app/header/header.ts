@@ -1,42 +1,27 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {serviceAuth} from '../services/auth';
+import {Observable} from 'rxjs';
+import {AsyncPipe, CommonModule} from '@angular/common';
+import {provideRouter, Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [CommonModule, AsyncPipe],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })
-export class Header {
-  constructor(private auth: serviceAuth) {
-  }
 
-  public authenticated: boolean = false;
+export class Header implements OnInit {
+  isAuthenticated$: Observable<boolean>;
 
-  public testAuth() {
-    console.log(this.auth.check().subscribe());
-    if (this.auth.check()) {
-      console.log("User is authenticated");
-      this.authenticated = true;
-    } else {
-      console.log("User is not authenticated");
-    }
-  }
-
-  init() {
-    console.log("Header initialized");
-    this.auth.check().subscribe(
-      (response: any) => {
-        console.log('User is authenticated:', response);
-      },
-      (error: any) => {
-        console.error('User is not authenticated:', error);
-      }
-    );
+  constructor(private auth: serviceAuth, private router: Router) {
+    this.isAuthenticated$ = this.auth.isAuthenticated$;
   }
 
   ngOnInit(): void {
+  }
 
-
+  logout(): void {
+    this.auth.logout();
   }
 }

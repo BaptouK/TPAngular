@@ -1,18 +1,70 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {catchError, map, Observable, tap, throwError} from 'rxjs';
+import {BehaviorSubject, catchError, map, Observable, of, tap, throwError} from 'rxjs';
 
 @Injectable({
   providedIn: 'any'
 })
 export class serviceAuth {
 
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+
   constructor(private http: HttpClient) {
+    this.checkAuthStatus();
   }
 
-  public login(email: string, password: string) {
-    return this.http.post('http://localhost:3000/login', {email, password});
+  public checkAuthStatus(): void {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      this.validateToken(token).subscribe({
+        next: (isValid) => {
+          console.log('Token validation result:', isValid);
+          this.isAuthenticatedSubject.next(isValid);
+        },
+        error: () => this.isAuthenticatedSubject.next(false),
+      });
+    } else {
+      this.isAuthenticatedSubject.next(false);
+    }
   }
+
+
+  private validateToken(token: string): Observable<boolean> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<{ message: string }>('http://localhost:3000/check', { headers }).pipe(
+      map((response) => {
+        // Si le message est "Vous êtes toujours connecté(e)", le token est valide
+        return response.message === "Vous êtes toujours connecté(e)";
+      }),
+      tap((isValid) => console.log('Token valide ?', isValid)), // Log pour déboguer
+      catchError((error) => {
+        console.error('Erreur lors de la validation du token:', error);
+        return of(false); // En cas d'erreur, considère le token comme invalide
+      })
+    );
+  }
+
+
+  public logout(): void {
+    localStorage.removeItem('authToken');
+    this.isAuthenticatedSubject.next(false);
+  }
+
+
+  public login(email: string, password: string): Observable<any> {
+    return this.http.post('http://localhost:3000/login', { email, password }).pipe(
+      tap((response: any) => {
+        if (response.data) {
+          localStorage.setItem('authToken', response.data);
+          this.checkAuthStatus();
+        }
+      })
+    );
+  }
+
 
   public signup(email: string, password: string, passwordConfirm: string, pseudo: string, cityCode: string, city: string, phone: string
   ) {
@@ -21,33 +73,4 @@ export class serviceAuth {
       cityCode, city, phone
     });
   }
-
-  public check(): Observable<boolean> {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-      console.error('Token non disponible');
-      return throwError(() => new Error('Token non disponible'));
-    }
-
-    // Crée les en-têtes avec le token Bearer
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
-    // Envoie la requête GET avec les en-têtes et analyse la réponse
-    return this.http.get('http://localhost:3000/check', { headers }).pipe(
-      tap((response: any) => {
-        console.log('Réponse de l\'API :', response);
-      }),
-      map((response: any) => {
-        // Vérifie le message de la réponse de l'API
-        return response.message === "Vous êtes toujours connecté(e)"; // Retourne true si l'utilisateur est connecté
-      }),
-      catchError((error) => {
-        console.error('Erreur lors de la vérification de l\'authentification :', error);
-        return throwError(() => new Error('Erreur lors de la vérification de l\'authentification'));
-      })
-    );
-  }
-
 }

@@ -1,6 +1,5 @@
 <form [formGroup]="AuthForm" (ngSubmit)="onSubmit()" class="uk-form-stacked uk-container uk-margin-top uk-width-1-2@m">
 
-  <!-- Email -->
   <div class="uk-margin">
     <label class="uk-form-label" for="email">Email</label>
     <div class="uk-form-controls">
@@ -8,7 +7,6 @@
     </div>
   </div>
 
-  <!-- Mot de passe -->
   <div class="uk-margin">
     <label class="uk-form-label" for="password">Mot de passe</label>
     <div class="uk-form-controls">
@@ -16,10 +14,9 @@
     </div>
   </div>
 
-  <!-- Bouton de soumission -->
   <div class="uk-margin uk-text-center">
     <button type="submit" class="uk-button uk-button-primary" [disabled]="AuthForm.invalid">
-      S'inscrire
+      Se connecter
     </button>
   </div>
 </form>

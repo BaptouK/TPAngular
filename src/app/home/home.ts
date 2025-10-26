@@ -15,8 +15,8 @@ export class Home {
   public authenticated: boolean = false;
 
   public testAuth() {
-    console.log(this.authService.check().subscribe());
-    if (this.authService.check()) {
+    console.log(this.authService.isAuthenticated$.subscribe());
+    if (this.authService.isAuthenticated$) {
       console.log("User is authenticated");
       this.authenticated = true;
     } else {
