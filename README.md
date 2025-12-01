@@ -1,4 +1,15 @@
-# ProjetGestionArticle
+# Projet de gestion d’articles et d’utilisateurs via une API REST.
+
+Ce projet vise l’utilisation et la manipulation d’une API RESTful permettant :
+
+• Réalisation d’opérations CRUD sur les articles
+• Gestion des utilisateurs : inscription, connexion, réinitialisation de mot de passe
+• Récupération et utilisation d’un token JWT pour l’authentification
+
+Seule la partie Front-End a été développée en Angular pour la mise en pratique du framework.
+L’interface est construite avec UiKit.
+
+API utilisée : https://github.com/Chocolaterie/ApiArticle
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.5.
 
