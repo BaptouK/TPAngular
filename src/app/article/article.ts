@@ -30,6 +30,8 @@ export class Articles implements OnInit{
     this.articleService.getArticles().subscribe({
       next: (response) => {
         this.article = response.data;
+        console.log("article : ",this.article);
+        console.log("article : ",this.article);
         this.isLoading = false;
       },
       error: (err) => {

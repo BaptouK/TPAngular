@@ -12,20 +12,20 @@ export class ArticleService {
   constructor(private http: HttpClient) { }
 
   public getArticles() : Observable<ApiResponse<Article[]>>{
-    return this.http.get<ApiResponse<Article[]>>('http://localhost:3000/articles');
+    return this.http.get<ApiResponse<Article[]>>('http://localhost:3000/getArticles');
   }
 
-  public getArticle(id : number) : Observable<ApiResponse<Article>> {
-    return this.http.get<ApiResponse<Article>>('http://localhost:3000/articles/'+id);
+  public getArticle(id : string) : Observable<ApiResponse<Article>> {
+    return this.http.get<ApiResponse<Article>>('http://localhost:3000/article/'+id);
   }
 
-  public deleteArticle(id : number) : Observable<void> {
-    return this.http.delete<void>('http://localhost:3000/articles/'+id);
+  public deleteArticle(id : string) : Observable<void> {
+    return this.http.delete<void>('http://localhost:3000/deleteArticle/'+id);
   }
 
   public createArticle(article : Article) : Observable<ApiResponse<Article>> {
     console.log(article);
-    return this.http.post<ApiResponse<Article>>('http://localhost:3000/articles/save', article);
+    return this.http.post<ApiResponse<Article>>('http://localhost:3000/createArticle', article);
   }
 
 }

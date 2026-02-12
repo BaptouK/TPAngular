@@ -37,7 +37,7 @@ export class ArticleEdit {
 
   public display() {
     this.id = this.route.snapshot.paramMap.get('id') as string;
-    this.api.getArticle(Number(this.id)).subscribe((data: any) => {
+    this.api.getArticle(String(this.id)).subscribe((data: any) => {
       this.article = data.data;
       // Initialise le formulaire avec les données de l'article
       this.EditArticleForm.patchValue({

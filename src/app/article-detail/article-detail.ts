@@ -25,7 +25,7 @@ export class ArticleDetail {
   article: any | undefined;
 
   public display() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id = String(this.route.snapshot.paramMap.get('id'));
     this.api.getArticle(id).subscribe((data: any) => {
       this.article = data.data;
 
@@ -34,7 +34,7 @@ export class ArticleDetail {
   }
 
   public delete() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id = String(this.route.snapshot.paramMap.get('id'));
     this.api.deleteArticle(id).subscribe(() => {
       this.router.navigate(['/']);
     });
